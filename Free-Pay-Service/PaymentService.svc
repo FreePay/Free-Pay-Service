@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="Free_Pay_Service.PaymentService" CodeBehind="PaymentService.svc.cs" %>
+<%@ ServiceHost Language="C#" Debug="true" Service="FreePayService.PaymentService" CodeBehind="PaymentService.svc.cs" %>
