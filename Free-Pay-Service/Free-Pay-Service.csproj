@@ -72,16 +72,18 @@
     <Content Include="App_Data\PaymentsDatabase_log.ldf">
       <DependentUpon>PaymentsDatabase.mdf</DependentUpon>
     </Content>
-    <Content Include="PaymentService.svc" />
+    <Content Include="Services\RegistrationService.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPaymentService.cs" />
-    <Compile Include="Models\Person.cs" />
-    <Compile Include="PaymentService.svc.cs">
-      <DependentUpon>PaymentService.svc</DependentUpon>
-    </Compile>
+    <Compile Include="Data\PaymentsContext.cs" />
+    <Compile Include="Models\ServiceRegistrationResult.cs" />
+    <Compile Include="Models\WebServiceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IRegistrationService.cs" />
+    <Compile Include="Services\RegistrationService.svc.cs">
+      <DependentUpon>RegistrationService.svc</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
