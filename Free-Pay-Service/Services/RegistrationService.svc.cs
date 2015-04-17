@@ -1,5 +1,6 @@
 ﻿using FreePayService.Data;
 using FreePayService.Models;
+using FreePayService.Security;
 using System.Linq;
 
 namespace FreePayService.Services

@@ -1,0 +1,5 @@
+﻿<%@ 
+ServiceHost Language="C#" Debug="true" 
+Service="FreePayService.Security.UserSecurityTokenServiceConfiguration" 
+Factory="FreePayService.Security.WSTrustServiceHostFactory"
+%>
