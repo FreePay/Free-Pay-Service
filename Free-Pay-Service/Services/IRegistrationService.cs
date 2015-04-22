@@ -13,5 +13,7 @@ namespace FreePayService.Services
     {
         [OperationContract]
         ServiceRegistrationResult RegisterService(string name, double price);
+        [OperationContract]
+        string GetCertificateNames();
     }
 }

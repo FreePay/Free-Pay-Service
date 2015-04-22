@@ -2,6 +2,7 @@
 using FreePayService.Models;
 using FreePayService.Security;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace FreePayService.Services
 {
@@ -35,6 +36,27 @@ namespace FreePayService.Services
                 }
             }
             return result;
+        }
+
+        public string GetCertificateNames()
+        {
+            var store = new X509Store(StoreLocation.LocalMachine);
+            string names = "";
+            store.Open(OpenFlags.ReadOnly);
+            try
+            {
+                var certificates = store.Certificates.OfType<X509Certificate2>();
+                foreach (var c in certificates)
+                {
+                    names += c.SubjectName.Name + "; ";
+                }
+            }
+            finally
+            {
+                store.Certificates.OfType<X509Certificate2>().ToList().ForEach(c => c.Reset());
+                store.Close();
+            }
+            return names;
         }
     }
 }

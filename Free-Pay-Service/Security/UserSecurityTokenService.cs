@@ -1,13 +1,8 @@
 ﻿using FreePayService.Security;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel;
 using System.IdentityModel.Configuration;
 using System.IdentityModel.Protocols.WSTrust;
-using System.IdentityModel.Tokens;
-using System.Linq;
 using System.Security.Claims;
-using System.Web;
 
 namespace FreePayService.Seсurity
 {
@@ -17,8 +12,7 @@ namespace FreePayService.Seсurity
         protected override Scope GetScope(ClaimsPrincipal principal, RequestSecurityToken request)
         {
             var requestUri = request.AppliesTo.Uri.AbsoluteUri;
-            var signingCredentials = new X509EncryptingCredentials(CertificateFactory.GetCertificate("CN=RP"));
-            Scope scope = new Scope(requestUri, SecurityTokenServiceConfiguration.SigningCredentials, signingCredentials);
+            Scope scope = new Scope(requestUri);
             return scope;
         }
 
@@ -28,6 +22,7 @@ namespace FreePayService.Seсurity
         {
             string userName = principal.Identity.Name;
             var requestUri = request.AppliesTo.Uri.AbsoluteUri;
+            bool hadPaid = new UserClaimValidator().HasRightsForAddress(userName, requestUri);
             string authenticationType = principal.Identity.AuthenticationType;
 
             var outputIdentity = new ClaimsIdentity(authenticationType);
