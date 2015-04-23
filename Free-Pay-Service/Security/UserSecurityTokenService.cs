@@ -13,6 +13,8 @@ namespace FreePayService.Seсurity
         {
             var requestUri = request.AppliesTo.Uri.AbsoluteUri;
             Scope scope = new Scope(requestUri);
+            scope.TokenEncryptionRequired = false;
+            scope.SymmetricKeyEncryptionRequired = false;
             return scope;
         }
 
@@ -23,12 +25,13 @@ namespace FreePayService.Seсurity
             string userName = principal.Identity.Name;
             var requestUri = request.AppliesTo.Uri.AbsoluteUri;
             bool hadPaid = new UserClaimValidator().HasRightsForAddress(userName, requestUri);
+            string role = hadPaid ? "Payed" : "NotPayed";
             string authenticationType = principal.Identity.AuthenticationType;
 
             var outputIdentity = new ClaimsIdentity(authenticationType);
 
-            Claim nameClame = new Claim(System.IdentityModel.Claims.ClaimTypes.Name, userName);
-            outputIdentity.AddClaim(nameClame);
+            outputIdentity.AddClaim(new Claim(ClaimTypes.Role, role));
+            outputIdentity.AddClaim(new Claim(System.IdentityModel.Claims.ClaimTypes.Name, userName));
             return outputIdentity;
         }
     }
