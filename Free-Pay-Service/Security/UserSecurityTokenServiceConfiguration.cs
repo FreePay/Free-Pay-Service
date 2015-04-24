@@ -11,7 +11,7 @@ namespace FreePayService.Security
     public class UserSecurityTokenServiceConfiguration : SecurityTokenServiceConfiguration
     {
         public UserSecurityTokenServiceConfiguration()
-            : base("http://FPSTS", new X509SigningCredentials(CertificateFactory.GetCertificate("CN=FPSTS")))
+            : base("http://FPSTS", new X509SigningCredentials(CertificateFactory.GetCertificate("CN=localhost")))
         {
             this.SecurityTokenService = typeof(UserSecurityTokenService);
             this.SecurityTokenHandlers.AddOrReplace(new UserNameTokenHandler());
