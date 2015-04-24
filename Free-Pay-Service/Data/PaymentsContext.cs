@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using FreePayService.Models;
 using System.Data.Entity;
-using FreePayService.Models;
 
 namespace FreePayService.Data
 {

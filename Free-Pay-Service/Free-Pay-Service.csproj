@@ -72,7 +72,9 @@
   <ItemGroup>
     <Content Include="Services\RegistrationService.svc" />
     <Content Include="Services\SecurityTokenService.svc" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\PaymentsContext.cs" />

@@ -9,7 +9,5 @@ namespace FreePayService.Models
         public bool IsSuccessful { get; set; }
         [DataMember]
         public string Message { get; set; }
-        [DataMember]
-        public WebServiceInfo ServiceInfo { get; set; }
     }
 }

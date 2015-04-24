@@ -12,8 +12,8 @@ namespace FreePayService.Services
     public interface IRegistrationService
     {
         [OperationContract]
-        ServiceRegistrationResult RegisterService(string name, double price);
+        ServiceRegistrationResult RegisterService(string name, string uri);
         [OperationContract]
-        string GetCertificateNames();
+        string GetServiceTime();
     }
 }
