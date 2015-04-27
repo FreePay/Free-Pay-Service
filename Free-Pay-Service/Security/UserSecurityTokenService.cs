@@ -25,13 +25,12 @@ namespace FreePayService.Seсurity
             string userName = principal.Identity.Name;
             var requestUri = request.AppliesTo.Uri.AbsoluteUri;
             bool hadPaid = new UserClaimValidator().HasRightsForAddress(userName, requestUri);
-            string role = hadPaid ? "Payed" : "NotPayed";
             string authenticationType = principal.Identity.AuthenticationType;
-
             var outputIdentity = new ClaimsIdentity(authenticationType);
-
-            outputIdentity.AddClaim(new Claim(ClaimTypes.Role, role));
-            outputIdentity.AddClaim(new Claim(System.IdentityModel.Claims.ClaimTypes.Name, userName));
+            if (hadPaid)
+            {
+                outputIdentity.AddClaim(new Claim(ClaimTypes.Name, userName));
+            }
             return outputIdentity;
         }
     }
