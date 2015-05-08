@@ -28,10 +28,35 @@ namespace FreePayService.Services
             }
             return result;
         }
-
-        public string GetServiceTime()
+        public ServiceRegistrationResult RegisterUser(string name)
         {
-            return DateTime.Now.ToString();
+            using (PaymentsContext context = new PaymentsContext())
+            {
+                for (int i = 0; i < context.Users.Count(); i++)
+                    if (context.Users.ElementAt(i).Name.Equals(name))
+                        return new ServiceRegistrationResult(false, "User with such name already exists.");
+
+                UserInfo userInfo = new UserInfo(name);
+                context.Users.Add(userInfo);
+                context.SaveChanges();
+                return new ServiceRegistrationResult(true, userInfo.ToString());
+            }
+        }
+        public ServiceRegistrationResult MakePayment(string userName, string serviceName)
+        {
+            using (PaymentsContext context = new PaymentsContext())
+            {
+                int userId = context.Users.Where(u => u.Name.Equals(userName)).FirstOrDefault().UserInfoId;
+                int serviceId = context.WebServices.Where(u => u.Name.Equals(serviceName)).FirstOrDefault().WebServiceInfoId;
+
+                if (userId == 0 || serviceId == 0)
+                    return new ServiceRegistrationResult(false, "User or service with such name does not exist.");
+
+                PaymentInfo paymentInfo = new PaymentInfo(userId, serviceId);
+                context.Payments.Add(paymentInfo);
+                context.SaveChanges();
+                return new ServiceRegistrationResult(true, paymentInfo.ToString());
+            }
         }
     }
 }

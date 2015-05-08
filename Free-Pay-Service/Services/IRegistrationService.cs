@@ -14,6 +14,8 @@ namespace FreePayService.Services
         [OperationContract]
         ServiceRegistrationResult RegisterService(string name, string uri);
         [OperationContract]
-        string GetServiceTime();
+        ServiceRegistrationResult RegisterUser(string name);
+        [OperationContract]
+        ServiceRegistrationResult MakePayment(string userName, string serviceName);
     }
 }
