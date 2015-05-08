@@ -14,7 +14,7 @@ namespace FreePayService.Services
             ServiceRegistrationResult result = new ServiceRegistrationResult();
             using (var context = new PaymentsContext())
             {
-                if (context.WebServices.Select(x => x.Name.Equals(name)).Any())
+                if (context.WebServices.Any(x => x.Name.Equals(name)))
                 {
                     result.Message = "Service with this name already exsts";
                     return result;
@@ -32,10 +32,10 @@ namespace FreePayService.Services
         {
             using (PaymentsContext context = new PaymentsContext())
             {
-                for (int i = 0; i < context.Users.Count(); i++)
-                    if (context.Users.ElementAt(i).Name.Equals(name))
-                        return new ServiceRegistrationResult(false, "User with such name already exists.");
-
+                if (context.Users.Any(u => u.Name.Equals(name)))
+                {
+                    return new ServiceRegistrationResult(false, "User with such name already exists.");
+                }
                 UserInfo userInfo = new UserInfo(name);
                 context.Users.Add(userInfo);
                 context.SaveChanges();
@@ -46,13 +46,16 @@ namespace FreePayService.Services
         {
             using (PaymentsContext context = new PaymentsContext())
             {
-                int userId = context.Users.Where(u => u.Name.Equals(userName)).FirstOrDefault().UserInfoId;
-                int serviceId = context.WebServices.Where(u => u.Name.Equals(serviceName)).FirstOrDefault().WebServiceInfoId;
+                UserInfo user = context.Users.Where(u => u.Name.Equals(userName)).FirstOrDefault();
+                WebServiceInfo service = context.WebServices.Where(u => u.Name.Equals(serviceName)).FirstOrDefault();
 
-                if (userId == 0 || serviceId == 0)
+                if (user == null || service == null)
                     return new ServiceRegistrationResult(false, "User or service with such name does not exist.");
 
-                PaymentInfo paymentInfo = new PaymentInfo(userId, serviceId);
+                if(context.Payments.Any(p => p.ServiceId == service.WebServiceInfoId && p.UserId == user.UserInfoId))
+                    return new ServiceRegistrationResult(false, "Already paid");
+
+                PaymentInfo paymentInfo = new PaymentInfo(user.UserInfoId, service.WebServiceInfoId);
                 context.Payments.Add(paymentInfo);
                 context.SaveChanges();
                 return new ServiceRegistrationResult(true, paymentInfo.ToString());
