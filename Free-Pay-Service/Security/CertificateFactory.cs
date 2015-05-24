@@ -11,8 +11,8 @@ namespace FreePayService.Security
     {
         public static X509Certificate2 GetCertificate(string name)
         {
-            var store = new X509Store(StoreLocation.CurrentUser);
-            store.Open(OpenFlags.ReadOnly);
+            var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+            store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
             try
             {
                 var cert = store.Certificates.OfType<X509Certificate2>()
