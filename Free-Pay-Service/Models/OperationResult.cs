@@ -3,14 +3,14 @@
 namespace FreePayService.Models
 {
     [DataContract] 
-    public class ServiceRegistrationResult
+    public class OperationResult
     {
         [DataMember]
         public bool IsSuccessful { get; set; }
         [DataMember]
         public string Message { get; set; }
-        public ServiceRegistrationResult() { }
-        public ServiceRegistrationResult(bool isSuccessful, string message)
+        public OperationResult() { }
+        public OperationResult(bool isSuccessful, string message)
         {
             IsSuccessful = isSuccessful;
             Message = message;

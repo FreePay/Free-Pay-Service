@@ -12,10 +12,14 @@ namespace FreePayService.Services
     public interface IRegistrationService
     {
         [OperationContract]
-        ServiceRegistrationResult RegisterService(string name, string uri);
+        OperationResult RegisterService(string name, string uri);
         [OperationContract]
-        ServiceRegistrationResult RegisterUser(string name);
+        OperationResult RegisterUser(string name);
         [OperationContract]
-        ServiceRegistrationResult MakePayment(string userName, string serviceName);
+        OperationResult MakePayment(string userName, string serviceName);
+        [OperationContract]
+        OperationResult DeleteService(string serviceName);
+        [OperationContract]
+        List<WebServiceInfo> GetServices();
     }
 }
